@@ -78,7 +78,7 @@
             </div>
           </div>
         </div>
-        <a class="checkout" href="/">購入手続きへ</a>
+        <a class="checkout" href="{{ route('purchase', $product->id) }}">購入手続きへ</a>
         <div class="product-explanation">
           商品説明
         </div>

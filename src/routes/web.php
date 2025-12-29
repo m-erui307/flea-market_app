@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,6 @@ Route::delete('/products/{product}/like', [LikeController::class, 'destroy'])
 
 Route::post('/products/{product}/comments', [CommentController::class, 'store']
 )->name('comments.store')->middleware('auth');
+
+Route::get('/purchase/{product}', [PurchaseController::class, 'show'])
+    ->name('purchase');
