@@ -42,4 +42,9 @@ class Product extends Model
             ->where('user_id', Auth::id())
             ->exists();
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }

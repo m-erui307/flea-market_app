@@ -1,0 +1,132 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1540px;
+    width: 100%;
+    min-height: 60px;
+    background-color: black;
+    align-items: center;
+}
+
+.header-logo {
+    margin-left: 15px;
+}
+
+.search-form__item-input {
+    height: 35px;
+    margin-right: 100px;
+    width: 100%;
+}
+
+.header-nav__list {
+    display: flex;
+}
+
+.header-nav__item {
+    color: white;
+    background-color: black;
+    text-decoration: none;
+    margin-right: 20px;
+    border: none;
+    font-size: 16px;
+}
+
+.header-nav__item-l {
+    color: black;
+    background-color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    padding: 5px 15px;
+    border-radius: 3%;
+}
+
+.exhibition-form__content {
+    max-width: 1230px;
+    margin: 0 auto;
+}
+
+.exhibition-form__heading {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.form {
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+}
+
+.product-img {
+    text-align: left;
+    font-weight: bold;
+}
+
+.img-content {
+    border: 1px dashed #808080;
+    border-radius: 2px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.picture-select {
+    color: #ea5550;
+    border: 1px solid #ea5550;
+    border-radius: 3px;
+    padding: 4px 10px;
+}
+
+#preview-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.product-detail {
+    text-align: left;
+    border-bottom: 1px solid black;
+    margin-top: 50px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.category {
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.category-checkbox {
+    display: none;
+}
+
+.category-label {
+    display: inline-block;
+    padding: 6px 14px;
+    margin: 6px 4px;
+    border: 1px solid #ea5550;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #ea5550;
+    transition: all 0.2s;
+}
+
+.category-checkbox:checked + .categorylabel {
+    background-color: #ea5550;
+    color: white;
+}
+
+.product-condition {
+    text-align: left;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.condition {
+    width: 100%;
+    height: 30px;
+}

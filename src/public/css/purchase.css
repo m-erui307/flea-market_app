@@ -42,17 +42,21 @@
 .content {
     display: flex;
     padding: 50px;
+    gap: 50px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .detail-content {
-    max-width: 700px;
-    width: 100%;
+    flex: 1;
+    min-width: 0;
 }
 
 .product-detail {
     display: flex;
     padding-bottom: 40px;
     border-bottom: 1px solid black;
+    align-items: flex-start;
 }
 
 .product-img {
@@ -68,12 +72,13 @@
 }
 
 .product-name {
-    margin-left: 20px;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
+.product-name,
 .product-price {
-    
+    margin-left: 20px;
 }
 
 .payment-content {
@@ -89,4 +94,71 @@
 
 .payment {
     margin-left: 70px;
+}
+
+.delivery-address {
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+.edit {
+    margin-top: 20px;
+    margin-right: 10px;
+}
+
+.address-content {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 40px;
+    border-bottom: 1px solid black;
+}
+
+.edit-btn {
+    text-decoration: none;
+    color: blue;
+}
+
+.address-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.postal-code {
+    margin-top: 20px;
+    margin-left: 70px;
+}
+
+.address {
+    margin-left: 70px;
+}
+
+.confirm-content {
+    width: 360px;
+}
+
+.confirm__table {
+    width: 100%;
+}
+
+.confirm__row {
+    border: 1px solid black;
+}
+
+.confirm__label {
+    padding: 20px;
+}
+
+.confirm__data {
+    padding: 20px;
+}
+
+.purchase-btn {
+    width: 100%;
+    background: #ea5550;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    margin-top: 40px;
+    padding: 5px;
 }

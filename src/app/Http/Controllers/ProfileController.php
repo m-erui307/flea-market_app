@@ -31,12 +31,10 @@ class ProfileController extends Controller
             $profile->profile_image = $path;
         }
 
-        // users テーブル更新
         $user->update([
             'user_name' => $request->user_name,
         ]);
 
-        // profiles テーブル更新
         $profile->update([
             'postal_code' => $request->postal_code,
             'address' => $request->address,

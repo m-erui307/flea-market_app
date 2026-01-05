@@ -44,3 +44,18 @@ Route::post('/products/{product}/comments', [CommentController::class, 'store']
 
 Route::get('/purchase/{product}', [PurchaseController::class, 'show'])
     ->name('purchase');
+
+Route::get('/address/change', function () {
+    return view('address_change');
+})->name('address.change');
+
+
+
+Route::get('/purchase/{product}/address', [PurchaseController::class, 'editAddress'])
+    ->name('purchase.address.edit');
+
+Route::post('/purchase/{product}/address', [PurchaseController::class, 'updateAddress'])
+    ->name('purchase.address.update');
+
+Route::get('/exhibition', [ProductController::class, 'create'])
+    ->name('exhibition');

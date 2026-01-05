@@ -25,7 +25,7 @@
         </form>
         @endif
         <li><a class="header-nav__item" href="">マイページ</a></li>
-        <li><a class="header-nav__item-l" href="">出品</a></li>
+        <li><a class="header-nav__item-l" href="{{ route('exhibition') }}">出品</a></li>
       </ul>
     </nav>
   </header>
