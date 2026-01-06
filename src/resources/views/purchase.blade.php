@@ -45,7 +45,7 @@
             支払い方法
           </div>
           <select id="paymentSelect" class="payment">
-            <option disabled selected>選択してください</option>
+            <option value="" hidden selected>選択してください</option>
             <option value="1">コンビニ払い</option>
             <option value="2">カード払い</option>
           </select>

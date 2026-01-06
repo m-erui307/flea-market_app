@@ -34,7 +34,7 @@
       <div class="exhibition-form__heading">
         <h2>商品の出品</h2>
       </div>
-      <form class="form">
+      <form class="exhibition-form">
         <div class="product-img">
           商品画像
         </div>
@@ -67,7 +67,7 @@
   商品の状態
 </div>
 <select class="condition">
-  <option disabled selected>選択してください</option>
+  <option value="" hidden selected>選択してください</option>
   <option value="1">良好</option>
             <option value="2">目立った傷や汚れなし</option>
             <option value="3">やや傷や汚れあり</option>
@@ -79,15 +79,32 @@
 <div class="product-name">
   商品名
 </div>
+<div class="product-name__input">
+  <input type="text" name="product_name">
+</div>
 <div class="brand">
   ブランド名
+</div>
+<div class="brand__input">
+  <input type="text" name="brand">
 </div>
 <div class="product-explanation">
   商品の説明
 </div>
+<div class="product-explanation__input">
+  <input type="text" name="product_explanation">
+</div>
 <div class="price">
   販売価格
 </div>
+<div class="price__input">
+  <span class="yen">¥</span>
+  <input type="text" name="price">
+</div>
+<div class="form__button">
+          <button class="form__button-submit" type="submit">出品する</button>
+        </div>
+      </form>
 <script>
 function previewImage(event) {
     const file = event.target.files[0];

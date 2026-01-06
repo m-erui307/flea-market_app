@@ -20,6 +20,7 @@
 
 .header-nav__list {
     display: flex;
+    flex-wrap: nowrap;
 }
 
 .header-nav__item {
@@ -51,7 +52,7 @@
     margin-bottom: 30px;
 }
 
-.form {
+.exhibition-form {
     margin: 0 auto;
     width: 50%;
     text-align: center;
@@ -105,16 +106,17 @@
 
 .category-label {
     display: inline-block;
-    padding: 6px 14px;
+    padding: 4px 10px;
     margin: 6px 4px;
     border: 1px solid #ea5550;
     border-radius: 20px;
     cursor: pointer;
     color: #ea5550;
     transition: all 0.2s;
+    font-size: 12px;
 }
 
-.category-checkbox:checked + .categorylabel {
+.category-checkbox:checked + .category-label {
     background-color: #ea5550;
     color: white;
 }
@@ -129,4 +131,83 @@
 .condition {
     width: 100%;
     height: 30px;
+}
+
+.product-name-explanation {
+    text-align: left;
+    border-bottom: 1px solid black;
+    margin-top: 50px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.product-name {
+    text-align: left;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.product-name__input input {
+    width: 100%;
+    height: 30px;
+}
+
+.brand {
+    text-align: left;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.brand__input input {
+    width: 100%;
+    height: 30px;
+}
+
+.product-explanation {
+    text-align: left;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.product-explanation__input input {
+    width: 100%;
+    height: 100px;
+}
+
+.price {
+    text-align: left;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.price__input {
+    position: relative;
+}
+
+.price__input .yen {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+}
+
+.price__input input{
+    width: 100%;
+    height: 25px;
+    padding-left: 18px;
+}
+
+.form__button-submit {
+    background-color: #ea5550;
+    color: white;
+    width: 100%;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    margin-top: 70px;
+    margin-bottom: 100px;
+    font-weight: bold;
+    border-radius: 3px;
 }

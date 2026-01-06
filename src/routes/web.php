@@ -28,6 +28,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/product_list', [ProductController::class, 'index']);
 });
 
+Route::get('/products/recommend', [ProductController::class, 'recommend'])
+    ->middleware('auth')
+    ->name('products.recommend');
+
 Route::get('/products/{id}', [ProductController::class, 'show'])
     ->name('products.show');
 
@@ -59,3 +63,4 @@ Route::post('/purchase/{product}/address', [PurchaseController::class, 'updateAd
 
 Route::get('/exhibition', [ProductController::class, 'create'])
     ->name('exhibition');
+

@@ -31,7 +31,9 @@
   </header>
   <main>
     <div class="product-list__nav">
-      <button class="product-list__nav--recs">おすすめ</button>
+      <a href="{{ route('products.recommend') }}" class="product-list__nav--recs">
+    おすすめ
+  </a>
       <button class="product-list__nav--my-list">マイリスト</button>
     </div>
     <div class="product-list">

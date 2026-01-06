@@ -49,6 +49,21 @@
     margin-top: 50px;
 }
 
+.product-list__nav--recs {
+    text-decoration: none;
+    color: black;
+    margin-left: 150px;
+    font-size: 16px;
+}
+
+.product-list__nav--my-list {
+    border: none;
+    color: #ea5550;
+    background-color: white;
+    margin-left: 50px;
+    font-size: 16px;
+}
+
 .product-list {
     display: flex;
     flex-wrap: wrap;
