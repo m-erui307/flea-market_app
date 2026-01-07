@@ -47,4 +47,17 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public const CONDITIONS = [
+        1 => '良好',
+        2 => '目立った傷や汚れなし',
+        3 => 'やや傷や汚れあり',
+        4 => '状態が悪い',
+    ];
+
+    public function getConditionLabelAttribute()
+    {
+        return self::CONDITIONS[$this->condition] ?? '不明';
+    }
 }
+

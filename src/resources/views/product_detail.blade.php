@@ -91,11 +91,19 @@
         <table class="product-info__table">
           <tr class="product-info__row">
             <th class="product-info__label">カテゴリー</th>
-            <td class="product-info__data"></td>
+            <td class="product-info__data">
+              @if($product->categories->isNotEmpty())
+        @foreach($product->categories as $category)
+            <span class="product-info__badge">{{ $category->name }}</span>
+        @endforeach
+    @else
+        未設定
+    @endif
+            </td>
           </tr>
           <tr class="product-info__row">
             <th class="product-info__label">商品の状態</th>
-            <td class="product-info__data">{{ $product->condition }}</td>
+            <td class="product-info__data--c">{{ $product->condition_label }}</td>
           </tr>
         </table>
         <div class="comment">

@@ -64,3 +64,6 @@ Route::post('/purchase/{product}/address', [PurchaseController::class, 'updateAd
 Route::get('/exhibition', [ProductController::class, 'create'])
     ->name('exhibition');
 
+Route::post('/products', [ProductController::class, 'store'])
+    ->middleware('auth')
+    ->name('products.store');

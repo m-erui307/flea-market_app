@@ -34,7 +34,10 @@
       <div class="exhibition-form__heading">
         <h2>商品の出品</h2>
       </div>
-      <form class="exhibition-form">
+      <form class="exhibition-form" action="{{ route('products.store') }}"
+      method="POST"
+      enctype="multipart/form-data">
+      @csrf
         <div class="product-img">
           商品画像
         </div>
@@ -66,7 +69,7 @@
 <div class="product-condition">
   商品の状態
 </div>
-<select class="condition">
+<select class="condition" name="condition">
   <option value="" hidden selected>選択してください</option>
   <option value="1">良好</option>
             <option value="2">目立った傷や汚れなし</option>
@@ -92,7 +95,7 @@
   商品の説明
 </div>
 <div class="product-explanation__input">
-  <input type="text" name="product_explanation">
+  <input type="text" name="explanation">
 </div>
 <div class="price">
   販売価格

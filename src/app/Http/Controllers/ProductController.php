@@ -30,7 +30,7 @@ class ProductController extends Controller
     }
 
     public function recommend()
-{
+    {
     $user = Auth::user();
 
     $products = Product::whereHas('likes', function ($query) use ($user) {
@@ -38,5 +38,27 @@ class ProductController extends Controller
     })->get();
 
     return view('product_list', compact('products'));
-}
+    }
+
+    public function store(Request $request)
+    {
+    // 画像保存
+    $path = $request->file('image')->store('products', 'public');
+
+    $product = Product::create([
+        'user_id' => Auth::id(),
+        'product_name' => $request->product_name,
+        'brand' => $request->brand,
+        'explanation' => $request->explanation,
+        'price' => $request->price,
+        'condition' => $request->condition,
+        'product_image' => '/storage/' . $path,
+    ]);
+
+    if ($request->filled('category_ids')) {
+        $product->categories()->sync($request->category_ids);
+    }
+
+    return redirect('/product_list');
+    }
 }

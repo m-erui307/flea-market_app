@@ -31,10 +31,10 @@
   </header>
   <main>
     <div class="product-list__nav">
-      <a href="{{ route('products.recommend') }}" class="product-list__nav--recs">
+      <a href="" class="product-list__nav--recs">
     おすすめ
   </a>
-      <button class="product-list__nav--my-list">マイリスト</button>
+      <a href="{{ route('products.recommend') }}" class="product-list__nav--my-list">マイリスト</a>
     </div>
     <div class="product-list">
       @foreach($products as $product)

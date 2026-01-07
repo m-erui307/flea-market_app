@@ -150,9 +150,22 @@
     margin-top: 20px;
 }
 
-.product-info__data {
-    margin-left: 50px;
+.product-info__label {
+    margin-right: 40px;
     display: inline-block;
+}
+
+.product-info__badge {
+    display: inline-block;
+    background-color: #d8d8d8;
+    border-radius: 15px;
+    padding: 3px 10px;
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+.product-info__data--c {
+    font-size: 14px;
 }
 
 .comment {

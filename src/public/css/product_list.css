@@ -57,7 +57,7 @@
 }
 
 .product-list__nav--my-list {
-    border: none;
+    text-decoration: none;
     color: #ea5550;
     background-color: white;
     margin-left: 50px;
