@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -20,12 +21,17 @@ use App\Http\Controllers\PurchaseController;
 */
 
 
+Route::get('/register', function() {
+    return view('auth.register');
+})->name('register');
 
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile/settings', [ProfileController::class, 'edit']);
-    Route::post('/profile/settings', [ProfileController::class, 'update']);
-    Route::get('/product_list', [ProductController::class, 'index']);
+    Route::get('/profile/settings', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/settings', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/product_list', [ProductController::class, 'index'])->name('product.list');
 });
 
 Route::get('/products/recommend', [ProductController::class, 'recommend'])
@@ -67,3 +73,4 @@ Route::get('/exhibition', [ProductController::class, 'create'])
 Route::post('/products', [ProductController::class, 'store'])
     ->middleware('auth')
     ->name('products.store');
+

@@ -29,17 +29,19 @@
       <div class="profile-settings-form__heading">
         <h2>プロフィール設定</h2>
       </div>
+      <form class="form" action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
+        @csrf
       <div class="profile-picture__content">
         <div class="profile-picture">
           <img src="">
         </div>
         <label class="picture-select">画像を選択する
-          <input type="file" name="picture-select__item" hidden>
+          <input type="file" name="profile_image" hidden>
         </label>
       </div>
       <script>
         const fileInput = document.querySelector(
-          'input[name="picture-select__item"]'
+          'input[name="profile_image"]'
         );
 
         const previewImage = document.querySelector(
@@ -54,14 +56,13 @@
           }
         });
       </script>
-      <form class="form" action="/profile_settings" method="post">
         <div class="form__group">
           <div class="form__group-title">
             <span class="form__label--item">ユーザー名</span>
           </div>
           <div class="form__group-content">
             <div class="form__input--text">
-              <input type="text" name="user_name" value="{{ old('user_name') }}" />
+              <input type="text" name="user_name" value="{{ old('user_name', $user->user_name) }}" />
             </div>
             <div class="form__error">
             @error('user_name')
@@ -76,7 +77,7 @@
           </div>
           <div class="form__group-content">
             <div class="form__input--text">
-              <input type="text" name="postal_code" value="{{ old('postal_code') }}" />
+              <input type="text" name="postal_code" value="{{ old('postal_code', $profile->postal_code ?? '') }}" />
             </div>
             <div class="form__error">
             @error('postal_code')
@@ -91,7 +92,7 @@
           </div>
           <div class="form__group-content">
             <div class="form__input--text">
-              <input type="text" name="address" value="{{ old('address') }}" />
+              <input type="text" name="address" value="{{ old('address', $profile->address ?? '') }}" />
             </div>
             <div class="form__error">
             @error('address')
@@ -106,7 +107,7 @@
           </div>
           <div class="form__group-content">
             <div class="form__input--text">
-              <input type="text" name="building" value="{{ old('building') }}" />
+              <input type="text" name="building" value="{{ old('building', $profile->building ?? '') }}" />
             </div>
           </div>
         </div>

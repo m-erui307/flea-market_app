@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
+use App\Models\User;
+use App\Models\Profile;
+use App\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller
 {
@@ -11,17 +15,20 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        $profile = $user->profile ?? Profile::create([
-            'user_id' => $user->id,
-        ]);
+        $profile = $user->profile;
 
         return view('profile_settings', compact('user', 'profile'));
     }
 
-    public function update(Request $request)
+    public function update(ProfileRequest $request)
     {
         $user = Auth::user();
-        $profile = $user->profile;
+
+        $profile = $user->profile ?? new Profile();
+        $profile->user_id = $user->id;
+        $profile->postal_code = $request->postal_code;
+        $profile->address = $request->address;
+        $profile->building = $request->building;
 
         // プロフィール画像
         if ($request->hasFile('profile_image')) {
@@ -31,16 +38,23 @@ class ProfileController extends Controller
             $profile->profile_image = $path;
         }
 
+        $profile->save();
+
         $user->update([
             'user_name' => $request->user_name,
         ]);
 
-        $profile->update([
-            'postal_code' => $request->postal_code,
-            'address' => $request->address,
-            'building' => $request->building,
-        ]);
-
-        return redirect('/product_list');
+        return redirect()->route('product.list');
     }
+
+    public function index()
+    {
+        $user = Auth::user();
+
+    $products = Product::where('user_id', $user->id)->get();
+    $profile = $user->profile;
+
+    return view('profile', compact('user', 'products', 'profile'));
+    }
+
 }

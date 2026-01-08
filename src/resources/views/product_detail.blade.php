@@ -112,7 +112,9 @@
         @foreach ($product->comments as $comment)
         <div class="user-content">
           <div class="user-img">
-            <img src="{{ asset($comment->user->profile_image) }}">
+            @if ($comment->user->profile && $comment->user->profile->profile_image)
+        <img src="{{ asset('storage/' . $comment->user->profile->profile_image) }}" alt="ユーザー画像">
+    @endif
           </div>
           <div class="user-name">
             {{ $comment->user->user_name }}
