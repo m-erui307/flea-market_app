@@ -36,4 +36,19 @@ class PurchaseController extends Controller
         return redirect()->route('purchase', $product);
     }
 
+    public function store(Request $request, Product $product)
+    {
+    $user = Auth::user();
+
+    if ($product->purchase) {
+        return redirect()->back();
+    }
+
+    Purchase::create([
+        'user_id' => $user->id,
+        'product_id' => $product->id,
+    ]);
+
+    return redirect()->route('product.list');
+    }
 }

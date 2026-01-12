@@ -17,6 +17,10 @@ class ProfileController extends Controller
 
         $profile = $user->profile;
 
+        if ($profile && $profile->postal_code && $profile->address) {
+        return redirect()->route('product.list');
+    }
+
         return view('profile_settings', compact('user', 'profile'));
     }
 
@@ -47,14 +51,30 @@ class ProfileController extends Controller
         return redirect()->route('product.list');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
+        $profile = $user->profile;
 
-    $products = Product::where('user_id', $user->id)->get();
-    $profile = $user->profile;
+        $tab = $request->query('tab', 'exhibition'); // デフォルト：出品
 
-    return view('profile', compact('user', 'products', 'profile'));
+        if ($tab === 'purchase') {
+        // 購入した商品
+            $products = $user->purchases()
+                ->with('product')
+                ->get()
+                ->pluck('product');
+        } else {
+        // 出品した商品
+            $products = Product::where('user_id', $user->id)->get();
+        }
+
+        return view('profile', compact(
+            'user',
+            'profile',
+            'products',
+            'tab'
+        ));
     }
 
 }

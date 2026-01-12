@@ -215,6 +215,15 @@
 
 .comment-field__item {
     width: 500px;
+    border: 1px solid;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.form__error {
+    height: 20px;
+    color: #ff0000;
+    text-align: left;
 }
 
 .post-btn {

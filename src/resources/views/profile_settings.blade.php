@@ -39,6 +39,11 @@
           <input type="file" name="profile_image" hidden>
         </label>
       </div>
+      <div class="form__error">
+            @error('profile_image')
+            {{ $message }}
+            @enderror
+            </div>
       <script>
         const fileInput = document.querySelector(
           'input[name="profile_image"]'

@@ -10,10 +10,10 @@
 <body>
   <header class="header">
     <img class="header-logo" src="../../../img/COACHTECHヘッダーロゴ.png">
-    <form class="search-form" action="/search" method="get">
+    <form class="search-form" action="{{ url()->current() }}" method="get">
     @csrf
     <div class="search-form__item">
-      <input class="search-form__item-input" type="text" name="keyword" value="{{ old('keyword') }}" placeholder="なにをお探しですか？">
+      <input class="search-form__item-input" type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？">
     </div>
     </form>
     <nav class="header-nav">
@@ -24,24 +24,28 @@
           <li><button type="submit" class="header-nav__item">ログアウト</button></li>
         </form>
         @endif
-        <li><a class="header-nav__item" href="{{ route('profile') }}">マイページ</a></li>
+        <li><a class="header-nav__item" href="{{ route('profile.index') }}">マイページ</a></li>
         <li><a class="header-nav__item-l" href="{{ route('exhibition') }}">出品</a></li>
       </ul>
     </nav>
   </header>
   <main>
     <div class="product-list__nav">
-      <a href="" class="product-list__nav--recs">
+      <a href="{{ route('product.list', ['keyword' => request('keyword')]) }}" class="product-list__nav--recs">
     おすすめ
   </a>
-      <a href="{{ route('products.recommend') }}" class="product-list__nav--my-list">マイリスト</a>
+      <a href="{{ Auth::check() ? route('products.recommend', ['keyword' => request('keyword')]) : '#' }}" class="product-list__nav--my-list">マイリスト</a>
     </div>
     <div class="product-list">
+      @if($type === 'recommend')
       @foreach($products as $product)
       <div class="product-list__content">
         <a href="{{ route('products.show', $product->id) }}">
           <div class="product-list__img">
             <img src="{{ $product->product_image }}" alt="商品画像">
+            @if($product->purchase)
+        <div class="sold-label">sold</div>
+      @endif
           </div>
         </a>
         <div class="product-name">
@@ -49,6 +53,25 @@
         </div>
       </div>
       @endforeach
+      @endif
+
+      @if($type === 'mylist' && Auth::check())
+    @foreach($products as $product)
+      <div class="product-list__content">
+        <a href="{{ route('products.show', $product->id) }}">
+          <div class="product-list__img">
+            <img src="{{ $product->product_image }}" alt="商品画像">
+            @if($product->purchase)
+              <div class="sold-label">sold</div>
+            @endif
+          </div>
+        </a>
+        <div class="product-name">
+          {{ $product->product_name }}
+        </div>
+      </div>
+    @endforeach
+  @endif
     </div>
   </main>
 </body>

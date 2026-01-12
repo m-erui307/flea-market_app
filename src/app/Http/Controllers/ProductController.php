@@ -3,17 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ExhibitionRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Purchase;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $userId = Auth::id();
 
-        return view('product_list', compact('products'));
+        $products = Product::with('purchase')
+        ->when($userId, function ($query) use ($userId) {
+            $query->where('user_id', '!=', $userId);
+        })
+        ->when($request->keyword, function ($query, $keyword) {
+            $query->where('product_name', 'like', "%{$keyword}%");
+        })
+        ->get();
+
+        return view('product_list', [
+        'products' => $products,
+        'type' => 'recommend',
+        ]);
     }
 
     public function show($id)
@@ -29,21 +43,36 @@ class ProductController extends Controller
         return view('exhibition', compact('categories'));
     }
 
-    public function recommend()
+    public function recommend(Request $request)
     {
-    $user = Auth::user();
-
-    $products = Product::whereHas('likes', function ($query) use ($user) {
-        $query->where('user_id', $user->id);
-    })->get();
-
-    return view('product_list', compact('products'));
+        if (!Auth::check()) {
+        return view('product_list', [
+            'products' => collect(),
+        ]);
     }
 
-    public function store(Request $request)
+        $userId = Auth::id();
+
+        $products = Product::where('user_id', '!=', $userId)
+        ->with('purchase')
+        ->whereHas('likes', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })
+        ->when($request->keyword, function ($query, $keyword) {
+            $query->where('product_name', 'like', "%{$keyword}%");
+        })
+        ->get();
+
+        return view('product_list', [
+        'products' => $products,
+        'type' => 'mylist',
+        ]);
+    }
+
+    public function store(ExhibitionRequest $request)
     {
     // 画像保存
-    $path = $request->file('image')->store('products', 'public');
+    $path = $request->file('product_image')->store('products', 'public');
 
     $product = Product::create([
         'user_id' => Auth::id(),
@@ -60,5 +89,34 @@ class ProductController extends Controller
     }
 
     return redirect('/product_list');
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        $products = Product::when($keyword, function ($query, $keyword) {
+            $query->where('product_name', 'like', '%' . $keyword . '%');
+        })->get();
+
+        return view('product_list', compact('products', 'keyword'));
+    }
+
+    public function purchase(Request $request, Product $product)
+    {
+        $user = Auth::user();
+
+        // 既に購入済みかチェック
+        if ($product->purchase) {
+            return redirect()->back();
+        }
+
+        // 購入情報作成
+        Purchase::create([
+            'user_id' => $user->id,
+            'product_id' => $product->id,
+        ]);
+
+        return redirect()->route('product.list');
     }
 }

@@ -44,7 +44,7 @@
         <div class="img-content">
           <img id="preview-image" src="" alt="" style="display: none;">
         <label class="picture-select">画像を選択する
-          <input type="file" name="image"
+          <input type="file" name="product_image"
       class="picture-select__item"
       accept="image/*"
       onchange="previewImage(event)"
@@ -52,6 +52,11 @@
     >
         </label>
       </div>
+      <div class="form__error">
+            @error('product_image')
+            {{ $message }}
+            @enderror
+            </div>
       <div class="product-detail">
         商品の詳細
       </div>
@@ -66,6 +71,11 @@
 </label>
 @endforeach
 </div>
+<div class="form__error">
+            @error('category_ids')
+            {{ $message }}
+            @enderror
+            </div>
 <div class="product-condition">
   商品の状態
 </div>
@@ -76,6 +86,11 @@
             <option value="3">やや傷や汚れあり</option>
             <option value="4">状態が悪い</option>
 </select>
+<div class="form__error">
+            @error('condition')
+            {{ $message }}
+            @enderror
+            </div>
 <div class="product-name-explanation">
   商品名と説明
 </div>
@@ -85,6 +100,11 @@
 <div class="product-name__input">
   <input type="text" name="product_name">
 </div>
+<div class="form__error">
+            @error('product_name')
+            {{ $message }}
+            @enderror
+            </div>
 <div class="brand">
   ブランド名
 </div>
@@ -97,6 +117,11 @@
 <div class="product-explanation__input">
   <input type="text" name="explanation">
 </div>
+<div class="form__error">
+            @error('explanation')
+            {{ $message }}
+            @enderror
+            </div>
 <div class="price">
   販売価格
 </div>
@@ -104,6 +129,11 @@
   <span class="yen">¥</span>
   <input type="text" name="price">
 </div>
+<div class="form__error">
+            @error('price')
+            {{ $message }}
+            @enderror
+            </div>
 <div class="form__button">
           <button class="form__button-submit" type="submit">出品する</button>
         </div>

@@ -128,13 +128,16 @@
         <div class="comment-field">
           商品へのコメント
         </div>
-        @auth
         <form method="POST" action="{{ route('comments.store', $product) }}">
           @csrf
-          <textarea class="comment-field__item" name="comment" cols="25" rows="10"></textarea>
-          <button class="post-btn">コメントを送信する</button>
-        </form>
-        @endauth
+          <textarea class="comment-field__item" name="comment" cols="25" rows="10" @guest disabled @endguest>{{ old('comment') }}</textarea>
+          <div class="form__error">
+            @error('comment')
+            {{ $message }}
+            @enderror
+            </div>
+          <button class="post-btn" @guest disabled @endguest>コメントを送信する</button>
+</form>
       </div>
     </div>
   </main>

@@ -59,5 +59,10 @@ class Product extends Model
     {
         return self::CONDITIONS[$this->condition] ?? '不明';
     }
+
+    public function purchase()
+    {
+    return $this->hasOne(Purchase::class);
+    }
 }
 

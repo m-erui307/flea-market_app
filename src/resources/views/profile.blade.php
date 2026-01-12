@@ -41,10 +41,11 @@
       </div>
       
     <div class="list-nav">
-      <a href="" class="exhibition">
+      <a href="{{ route('profile.index', ['tab' => 'exhibition']) }}" class="exhibition {{ $tab === 'exhibition' ? 'active' : '' }}">
     出品した商品
   </a>
-      <a href="" class="purchase">購入した商品</a>
+      <a href="{{ route('profile.index', ['tab' => 'purchase']) }}"
+      class="purchase {{ $tab === 'purchase' ? 'active' : '' }}">購入した商品</a>
     </div>
     <div class="product-list">
       @foreach($products as $product)

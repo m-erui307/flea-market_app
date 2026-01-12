@@ -40,11 +40,13 @@
           </div>
           </div>
         </div>
+        <form action="{{ route('products.purchase', $product) }}" method="post">
+    @csrf
         <div class="payment-content">
           <div class="payment-method">
             支払い方法
           </div>
-          <select id="paymentSelect" class="payment">
+          <select id="paymentSelect" name="payment" class="payment">
             <option value="" hidden selected>選択してください</option>
             <option value="1">コンビニ払い</option>
             <option value="2">カード払い</option>
@@ -97,6 +99,7 @@
     });
 </script>
           <button class="purchase-btn">購入する</button>
+  </form>
         </div>
       </div>
     </div>
