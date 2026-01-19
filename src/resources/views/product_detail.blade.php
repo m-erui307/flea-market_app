@@ -10,17 +10,28 @@
 <body>
   <header class="header">
     <img class="header-logo" src="../../../img/COACHTECHヘッダーロゴ.png">
-    <form class="search-form" action="/search" method="get">
+    <form class="search-form" action="{{ url()->current() }}" method="get">
     @csrf
     <div class="search-form__item">
-      <input class="search-form__item-input" type="text" name="keyword" value="{{ old('keyword') }}" placeholder="なにをお探しですか？">
+      <input class="search-form__item-input" type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？">
     </div>
     </form>
     <nav class="header-nav">
       <ul class="header-nav__list">
-        <li><a class="header-nav__item" href="/login">ログアウト</a></li>
-        <li><a class="header-nav__item" href="">マイページ</a></li>
-        <li><a class="header-nav__item-l" href="">出品</a></li>
+        @if (Auth::check())
+        <form class="form" action="{{ route('logout') }}" method="post">
+          @csrf
+          <li><button type="submit" class="header-nav__item">ログアウト</button></li>
+        </form>
+        @else
+      <li>
+        <a href="{{ route('login') }}" class="header-nav__item">
+          ログイン
+        </a>
+      </li>
+        @endif
+        <li><a class="header-nav__item" href="{{ Auth::check() ? route('profile.index') : route('login') }}">マイページ</a></li>
+        <li><a class="header-nav__item-l" href="{{ Auth::check() ? route('exhibition') : route('login') }}">出品</a></li>
       </ul>
     </nav>
   </header>
@@ -65,7 +76,9 @@
             @endauth
 
             @guest
+            <a href="{{ route('login') }}" class="like-btn">
             <img src="{{ asset('img/ハートロゴ_デフォルト.png') }}" alt="いいね">
+            </a>
             @endguest
             <div class="count">
               {{ $product->likes_count }}
@@ -78,7 +91,7 @@
             </div>
           </div>
         </div>
-        <a class="checkout" href="{{ route('purchase', $product) }}">購入手続きへ</a>
+        <a class="checkout" href="{{ Auth::check() ? route('purchase', $product) : route('login') }}">購入手続きへ</a>
         <div class="product-explanation">
           商品説明
         </div>
@@ -128,16 +141,17 @@
         <div class="comment-field">
           商品へのコメント
         </div>
-        <form method="POST" action="{{ route('comments.store', $product) }}">
+        <form method="POST" action="{{ route('comments.store', $product) }}"
+      onsubmit="@guest event.preventDefault(); window.location='{{ route('login') }}'; @endguest">
           @csrf
-          <textarea class="comment-field__item" name="comment" cols="25" rows="10" @guest disabled @endguest>{{ old('comment') }}</textarea>
+          <textarea class="comment-field__item" name="comment" cols="25" rows="10">{{ old('comment') }}</textarea>
           <div class="form__error">
             @error('comment')
             {{ $message }}
             @enderror
             </div>
-          <button class="post-btn" @guest disabled @endguest>コメントを送信する</button>
-</form>
+          <button class="post-btn">コメントを送信する</button>
+          </form>
       </div>
     </div>
   </main>

@@ -10,17 +10,28 @@
 <body>
   <header class="header">
     <img class="header-logo" src="../../../img/COACHTECHヘッダーロゴ.png">
-    <form class="search-form" action="/search" method="get">
+    <form class="search-form" action="{{ url()->current() }}" method="get">
     @csrf
     <div class="search-form__item">
-      <input class="search-form__item-input" type="text" name="keyword" value="{{ old('keyword') }}" placeholder="なにをお探しですか？">
+      <input class="search-form__item-input" type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？">
     </div>
     </form>
     <nav class="header-nav">
       <ul class="header-nav__list">
-        <li><a class="header-nav__item" href="/login">ログアウト</a></li>
-        <li><a class="header-nav__item" href="">マイページ</a></li>
-        <li><a class="header-nav__item-l" href="">出品</a></li>
+        @if (Auth::check())
+        <form class="logout-form" action="{{ route('logout') }}" method="post">
+          @csrf
+          <li><button type="submit" class="header-nav__item">ログアウト</button></li>
+        </form>
+        @else
+      <li>
+        <a href="{{ route('login') }}" class="header-nav__item">
+          ログイン
+        </a>
+      </li>
+        @endif
+        <li><a class="header-nav__item" href="{{ Auth::check() ? route('profile.index') : route('login') }}">マイページ</a></li>
+        <li><a class="header-nav__item-l" href="{{ Auth::check() ? route('exhibition') : route('login') }}">出品</a></li>
       </ul>
     </nav>
   </header>

@@ -19,6 +19,7 @@ use Laravel\Fortify\Contracts\LogoutResponse as LogoutResponseContract;
 use App\Responses\CustomLoginResponse;
 use App\Responses\CustomRegisterResponse;
 use App\Responses\LogoutResponse;
+use Illuminate\Support\Facades\Hash;
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -51,6 +52,20 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::loginView(function () {
         return view('auth.login');
+        });
+
+        Fortify::verifyEmailView(function () {
+            return view('auth.email_verification');
+        });
+
+        Fortify::createUsersUsing(CreateNewUser::class);
+
+        Fortify::authenticateUsing(function (Request $request) {
+            $user = \App\Models\User::where('email', $request->email)->first();
+
+            if ($user && Hash::check($request->password, $user->password)) {
+                return $user;
+            }
         });
 
     }

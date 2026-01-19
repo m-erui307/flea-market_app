@@ -12,8 +12,6 @@
     margin-left: 15px;
 }
 
-
-
 .search-form__item-input {
     height: 35px;
     margin-right: 100px;
@@ -98,10 +96,13 @@
 
 .purchase {
     text-decoration: none;
-    color: #ea5550;
-    background-color: white;
+    color: black;
     margin-left: 50px;
     font-size: 16px;
+}
+
+.list-nav a.active {
+    color: #ea5550;
 }
 
 .product-list {

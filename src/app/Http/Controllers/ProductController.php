@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ExhibitionRequest;
+use App\Http\Requests\PurchaseRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Purchase;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 
 class ProductController extends Controller
 {
@@ -102,9 +105,10 @@ class ProductController extends Controller
         return view('product_list', compact('products', 'keyword'));
     }
 
-    public function purchase(Request $request, Product $product)
+    public function purchase(PurchaseRequest $request, Product $product)
     {
         $user = Auth::user();
+        $profile = $user->profile;
 
         // 既に購入済みかチェック
         if ($product->purchase) {
@@ -115,8 +119,70 @@ class ProductController extends Controller
         Purchase::create([
             'user_id' => $user->id,
             'product_id' => $product->id,
+            'postal_code' => $profile->postal_code,
+            'address'     => $profile->address,
+            'building'    => $profile->building,
+            'payment'     => $request->payment,
         ]);
 
         return redirect()->route('product.list');
+    }
+
+    public function checkout(PurchaseRequest $request, Product $product)
+    {
+    $user = Auth::user();
+
+    // 既に購入済みチェック
+    if ($product->purchase) {
+        return redirect()->back();
+    }
+
+    Stripe::setApiKey(config('services.stripe.secret'));
+
+    $session = Session::create([
+        'payment_method_types' => ['card', 'konbini'],
+        'line_items' => [[
+            'price_data' => [
+                'currency' => 'jpy',
+                'product_data' => [
+                    'name' => $product->product_name,
+                ],
+                'unit_amount' => $product->price,
+            ],
+            'quantity' => 1,
+        ]],
+        'mode' => 'payment',
+        'success_url' => route('products.success', $product) . '?session_id={CHECKOUT_SESSION_ID}',
+        'cancel_url' => url()->previous(),
+        'metadata' => [
+            'user_id' => $user->id,
+            'product_id' => $product->id,
+            'payment' => $request->payment,
+        ],
+    ]);
+
+    return redirect($session->url);
+    }
+
+    public function success(Request $request, Product $product)
+    {
+    $user = Auth::user();
+    $profile = $user->profile;
+
+    // 二重購入防止
+    if ($product->purchase) {
+        return redirect()->route('product.list');
+    }
+
+    Purchase::create([
+        'user_id' => $user->id,
+        'product_id' => $product->id,
+        'postal_code' => $profile->postal_code,
+        'address'     => $profile->address,
+        'building'    => $profile->building,
+        'payment'     => $request->payment ?? 'stripe',
+    ]);
+
+    return redirect()->route('product.list');
     }
 }

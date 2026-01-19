@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PurchaseRequest;
 
 class PurchaseController extends Controller
 {
@@ -24,7 +26,7 @@ class PurchaseController extends Controller
         return view('address_change', compact('user', 'product'));
     }
 
-    public function updateAddress(Request $request, Product $product)
+    public function updateAddress(AddressRequest $request, Product $product)
     {
         $user = Auth::user();
 
@@ -36,9 +38,10 @@ class PurchaseController extends Controller
         return redirect()->route('purchase', $product);
     }
 
-    public function store(Request $request, Product $product)
+    public function store(PurchaseRequest $request, Product $product)
     {
     $user = Auth::user();
+    $profile = $user->profile;
 
     if ($product->purchase) {
         return redirect()->back();
@@ -47,6 +50,10 @@ class PurchaseController extends Controller
     Purchase::create([
         'user_id' => $user->id,
         'product_id' => $product->id,
+        'postal_code' => $profile->postal_code,
+        'address'     => $profile->address,
+        'building'    => $profile->building,
+        'payment'     => $request->payment,
     ]);
 
     return redirect()->route('product.list');
