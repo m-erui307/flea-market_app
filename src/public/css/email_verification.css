@@ -28,12 +28,14 @@
     padding: 8px 10px;
     border: 1px solid;
     background-color: #c0c0c0;
+    text-decoration: none;
+    color: black;
 }
 
 .verification-resend {
-    display: block;
     margin-top: 40px;
     margin-bottom: 50px;
-    text-decoration: none;
-    font-size: 14px;
+    border: none;
+    background-color: white;
+    color: #0068b7;
 }

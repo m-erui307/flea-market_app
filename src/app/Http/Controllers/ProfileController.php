@@ -17,10 +17,6 @@ class ProfileController extends Controller
 
         $profile = $user->profile;
 
-        if ($profile && $profile->postal_code && $profile->address) {
-        return redirect()->route('product.list');
-    }
-
         return view('profile_settings', compact('user', 'profile'));
     }
 

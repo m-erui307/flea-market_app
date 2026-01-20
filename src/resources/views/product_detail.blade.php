@@ -36,6 +36,7 @@
     </nav>
   </header>
   <main>
+    <div class="content">
     <div class="product__content">
       <div class="product-img__content">
         <div class="product-img">
@@ -154,6 +155,7 @@
           </form>
       </div>
     </div>
+</div>
   </main>
 </body>
 </html>

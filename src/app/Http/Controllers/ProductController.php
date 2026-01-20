@@ -139,8 +139,15 @@ class ProductController extends Controller
 
     Stripe::setApiKey(config('services.stripe.secret'));
 
+    // 支払い方法分岐
+    if ($request->payment == 1) {
+        $paymentMethods = ['konbini'];
+    } else {
+        $paymentMethods = ['card'];
+    }
+
     $session = Session::create([
-        'payment_method_types' => ['card', 'konbini'],
+        'payment_method_types' => $paymentMethods,
         'line_items' => [[
             'price_data' => [
                 'currency' => 'jpy',
@@ -152,13 +159,11 @@ class ProductController extends Controller
             'quantity' => 1,
         ]],
         'mode' => 'payment',
-        'success_url' => route('products.success', $product) . '?session_id={CHECKOUT_SESSION_ID}',
+
+        'success_url' => route('products.success', $product)
+            . '?payment=' . $request->payment,
+
         'cancel_url' => url()->previous(),
-        'metadata' => [
-            'user_id' => $user->id,
-            'product_id' => $product->id,
-            'payment' => $request->payment,
-        ],
     ]);
 
     return redirect($session->url);
@@ -180,7 +185,7 @@ class ProductController extends Controller
         'postal_code' => $profile->postal_code,
         'address'     => $profile->address,
         'building'    => $profile->building,
-        'payment'     => $request->payment ?? 'stripe',
+        'payment'     => $request->payment, // 1 or 2
     ]);
 
     return redirect()->route('product.list');

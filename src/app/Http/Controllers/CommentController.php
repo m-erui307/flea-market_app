@@ -13,7 +13,7 @@ class CommentController extends Controller
         Comment::create([
             'user_id' => auth()->id(),
             'product_id' => $product->id,
-            'comment' => $request->validated('comment'),
+            'comment' => $request->comment,
         ]);
 
         return back();

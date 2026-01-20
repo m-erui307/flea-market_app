@@ -44,7 +44,7 @@
         @csrf
       <div class="profile-picture__content">
         <div class="profile-picture">
-          <img src="">
+          <img src="{{ $profile && $profile->profile_image ? asset('storage/' . $profile->profile_image) : '' }}" alt="プロフィール画像">
         </div>
         <label class="picture-select">画像を選択する
           <input type="file" name="profile_image" hidden>

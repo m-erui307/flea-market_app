@@ -16,15 +16,19 @@
       <div class="verification-message">
         登録していただいたメールアドレスに認証メールを送付しました。<br />メール認証を完了してください。
       </div>
+      <a
+  href="http://localhost:8025"
+  target="_blank"
+  class="verification-btn"
+>
+  認証はこちらから
+</a>
       <form method="POST" action="{{ route('verification.send') }}">
-        @csrf
-      <button class="verification-btn" type="submit">
-        認証はこちらから
-      </button>
-      <a class="verification-resend" href="">
-        認証メールを再送する
-      </a>
-      </form>
+  @csrf
+  <button class="verification-resend" type="submit">
+    認証メールを再送する
+  </button>
+</form>
   </main>
 </body>
 </html>
