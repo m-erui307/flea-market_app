@@ -40,7 +40,7 @@
       <a href="{{ route('product.list', ['keyword' => request('keyword')]) }}" class="product-list__nav--recs {{ $type === 'recommend' ? 'active' : '' }}">
     おすすめ
   </a>
-      <a href="{{ Auth::check() ? route('products.recommend', ['keyword' => request('keyword')]) : '#' }}" class="product-list__nav--my-list {{ $type === 'mylist' ? 'active' : '' }}">マイリスト</a>
+      <a href="{{ route('products.recommend', ['keyword' => request('keyword')]) }}" class="product-list__nav--my-list {{ $type === 'mylist' ? 'active' : '' }}">マイリスト</a>
     </div>
     <div class="product-list">
       @if($type === 'recommend')

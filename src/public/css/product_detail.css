@@ -41,13 +41,14 @@
 }
 
 .content {
+    max-width: 1400px;
     margin: 0 auto;
-    max-width: 1200px;
-    width: 100%;
 }
 
 .product__content {
     display: flex;
+    justify-content: center;
+    gap: 50px;
 }
 
 .product-img {
@@ -55,7 +56,6 @@
     height: 500px;
     background-color: #d8d8d8;
     border-radius: 1%;
-    margin-left: 50px;
     margin-top: 100px;
     position: relative;
     overflow: hidden;
@@ -87,8 +87,6 @@
 .like-comment__content {
     display: flex;
     justify-content: flex-start;
-    max-width: 1540px;
-    min-width: 1400px;
 }
 
 .like-box,

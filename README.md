@@ -38,3 +38,6 @@ php artisan db:seed
 
 ## ER図
 ![ER図](./docs/erd.png)
+
+## その他
+会員登録、ログイン、ログアウト等を一定数繰り返し行うとHTTP 429 “TOO MANY REQUESTS”のエラーが出る。対処方法はブラウザのキャッシュクリアを行うか時間を置くと直る。

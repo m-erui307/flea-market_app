@@ -33,7 +33,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::get('/products/recommend', [ProductController::class, 'recommend'])
-    ->middleware('auth')
     ->name('products.recommend');
 
 Route::get('/products/{id}', [ProductController::class, 'show'])

@@ -51,12 +51,13 @@ class ProductController extends Controller
         if (!Auth::check()) {
         return view('product_list', [
             'products' => collect(),
+            'type' => 'mylist',
         ]);
     }
 
-        $userId = Auth::id();
+    $userId = Auth::id();
 
-        $products = Product::where('user_id', '!=', $userId)
+    $products = Product::where('user_id', '!=', $userId)
         ->with('purchase')
         ->whereHas('likes', function ($query) use ($userId) {
             $query->where('user_id', $userId);
@@ -66,10 +67,10 @@ class ProductController extends Controller
         })
         ->get();
 
-        return view('product_list', [
+    return view('product_list', [
         'products' => $products,
         'type' => 'mylist',
-        ]);
+    ]);
     }
 
     public function store(ExhibitionRequest $request)

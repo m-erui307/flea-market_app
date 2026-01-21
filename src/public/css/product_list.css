@@ -68,15 +68,15 @@
 .product-list {
     display: flex;
     flex-wrap: wrap;
-    max-width: 1540px;
+    max-width: 1400px;
     width: 100%;
     padding: 20px 30px;
     gap: 20px;
     justify-content: flex-start;
+    margin: 0 auto;
 }
 
 .product-list__content {
-    margin: 0 auto;
     margin-top: 40px;
     width: 250px;
     text-align: left;
