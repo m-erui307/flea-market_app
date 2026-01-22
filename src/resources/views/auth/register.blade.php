@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>会員登録</title>
-    <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>会員登録</title>
+  <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 </head>
 <body>
   <header class="header">
@@ -27,9 +27,9 @@
               <input type="text" name="user_name" value="{{ old('user_name') }}" />
             </div>
             <div class="form__error">
-            @error('user_name')
-            {{ $message }}
-            @enderror
+              @error('user_name')
+              {{ $message }}
+              @enderror
             </div>
           </div>
         </div>
@@ -42,9 +42,9 @@
               <input type="email" name="email" value="{{ old('email') }}" />
             </div>
             <div class="form__error">
-            @error('email')
-            {{ $message }}
-            @enderror
+              @error('email')
+              {{ $message }}
+              @enderror
             </div>
           </div>
         </div>
@@ -57,9 +57,9 @@
               <input type="password" name="password" />
             </div>
             <div class="form__error">
-            @error('password')
-            {{ $message }}
-            @enderror
+              @error('password')
+              {{ $message }}
+              @enderror
             </div>
           </div>
         </div>
@@ -72,9 +72,9 @@
               <input type="password" name="password_confirmation" />
             </div>
             <div class="form__error">
-            @error('password_confirmation')
-            {{ $message }}
-            @enderror
+              @error('password_confirmation')
+              {{ $message }}
+              @enderror
             </div>
           </div>
         </div>

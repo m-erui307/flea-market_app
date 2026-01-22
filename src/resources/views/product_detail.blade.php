@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/product_detail.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商品詳細</title>
+  <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/product_detail.css') }}">
 </head>
 <body>
   <header class="header">
     <img class="header-logo" src="../../../img/COACHTECHヘッダーロゴ.png">
     <form class="search-form" action="{{ url()->current() }}" method="get">
-    @csrf
-    <div class="search-form__item">
-      <input class="search-form__item-input" type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？">
-    </div>
+      @csrf
+      <div class="search-form__item">
+        <input class="search-form__item-input" type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？">
+      </div>
     </form>
     <nav class="header-nav">
       <ul class="header-nav__list">
         @if (Auth::check())
         <form class="form" action="{{ route('logout') }}" method="post">
           @csrf
-          <li><button type="submit" class="header-nav__item">ログアウト</button></li>
+          <li>
+            <button type="submit" class="header-nav__item">ログアウト</button>
+          </li>
         </form>
         @else
-      <li>
-        <a href="{{ route('login') }}" class="header-nav__item">
-          ログイン
-        </a>
-      </li>
+        <li>
+          <a href="{{ route('login') }}" class="header-nav__item">ログイン</a>
+        </li>
         @endif
-        <li><a class="header-nav__item" href="{{ Auth::check() ? route('profile.index') : route('login') }}">マイページ</a></li>
-        <li><a class="header-nav__item-l" href="{{ Auth::check() ? route('exhibition') : route('login') }}">出品</a></li>
+        <li>
+          <a class="header-nav__item" href="{{ Auth::check() ? route('profile.index') : route('login') }}">マイページ</a>
+        </li>
+        <li>
+          <a class="header-nav__item-l" href="{{ Auth::check() ? route('exhibition') : route('login') }}">出品</a>
+        </li>
       </ul>
     </nav>
   </header>
   <main>
-    <div class="content">
     <div class="product__content">
       <div class="product-img__content">
         <div class="product-img">
@@ -59,8 +62,8 @@
             @if($product->isLikedByAuthUser())
             {{-- いいね済み --}}
             <form action="{{ route('products.unlike', $product) }}" method="POST">
-            @csrf
-            @method('DELETE')
+              @csrf
+              @method('DELETE')
               <button type="submit" class="like-btn">
                 <img src="{{ asset('img/ハートロゴ_ピンク.png') }}" alt="いいね済み">
               </button>
@@ -68,7 +71,7 @@
             @else
             {{-- 未いいね --}}
             <form action="{{ route('products.like', $product) }}" method="POST">
-            @csrf
+              @csrf
               <button type="submit" class="like-btn">
                 <img src="{{ asset('img/ハートロゴ_デフォルト.png') }}" alt="いいね">
               </button>
@@ -78,7 +81,7 @@
 
             @guest
             <a href="{{ route('login') }}" class="like-btn">
-            <img src="{{ asset('img/ハートロゴ_デフォルト.png') }}" alt="いいね">
+              <img src="{{ asset('img/ハートロゴ_デフォルト.png') }}" alt="いいね">
             </a>
             @endguest
             <div class="count">
@@ -107,12 +110,12 @@
             <th class="product-info__label">カテゴリー</th>
             <td class="product-info__data">
               @if($product->categories->isNotEmpty())
-        @foreach($product->categories as $category)
-            <span class="product-info__badge">{{ $category->name }}</span>
-        @endforeach
-    @else
-        未設定
-    @endif
+              @foreach($product->categories as $category)
+              <span class="product-info__badge">{{ $category->name }}</span>
+              @endforeach
+              @else
+                未設定
+              @endif
             </td>
           </tr>
           <tr class="product-info__row">
@@ -127,8 +130,8 @@
         <div class="user-content">
           <div class="user-img">
             @if ($comment->user->profile && $comment->user->profile->profile_image)
-        <img src="{{ asset('storage/' . $comment->user->profile->profile_image) }}" alt="ユーザー画像">
-    @endif
+            <img src="{{ asset('storage/' . $comment->user->profile->profile_image) }}" alt="ユーザー画像">
+          @endif
           </div>
           <div class="user-name">
             {{ $comment->user->user_name }}
@@ -138,24 +141,22 @@
           {{ $comment->comment }}
         </div>
         @endforeach
-
         <div class="comment-field">
           商品へのコメント
         </div>
-        <form method="POST" action="{{ route('comments.store', $product) }}"
-      onsubmit="@guest event.preventDefault(); window.location='{{ route('login') }}'; @endguest">
+          <form method="POST" action="{{ route('comments.store', $product) }}" onsubmit="@guest event.preventDefault(); window.location='{{ route('login') }}'; @endguest">
           @csrf
           <textarea class="comment-field__item" name="comment" cols="25" rows="10">{{ old('comment') }}</textarea>
           <div class="form__error">
             @error('comment')
             {{ $message }}
             @enderror
-            </div>
+          </div>
           <button class="post-btn">コメントを送信する</button>
           </form>
+        </div>
       </div>
     </div>
-</div>
   </main>
 </body>
 </html>

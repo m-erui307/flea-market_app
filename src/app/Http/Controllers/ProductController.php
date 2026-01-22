@@ -10,7 +10,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Purchase;
 use Stripe\Stripe;
-use Stripe\Checkout\Session;
+use Stripe\Checkout\Session as CheckoutSession;
 
 class ProductController extends Controller
 {
@@ -116,58 +116,92 @@ class ProductController extends Controller
             return redirect()->back();
         }
 
-        // 購入情報作成
+        if ($request->payment == 1) {
+
         Purchase::create([
-            'user_id' => $user->id,
+            'user_id'    => $user->id,
             'product_id' => $product->id,
-            'postal_code' => $profile->postal_code,
-            'address'     => $profile->address,
-            'building'    => $profile->building,
-            'payment'     => $request->payment,
+            'postal_code'=> $profile->postal_code,
+            'address'    => $profile->address,
+            'building'   => $profile->building,
+            'payment'    => 1,
         ]);
 
-        return redirect()->route('product.list');
+        return redirect()->route('products.success', $product);
+    }
+
+    if ($request->payment == 2) {
+
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        $session = CheckoutSession::create([
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'product_data' => [
+                        'name' => $product->product_name,
+                    ],
+                    'unit_amount' => $product->price,
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('products.success', $product),
+            'cancel_url' => route('purchase', $product),
+        ]);
+
+        return redirect($session->url);
+    }
+
     }
 
     public function checkout(PurchaseRequest $request, Product $product)
     {
     $user = Auth::user();
+    $profile = $user->profile;
 
-    // 既に購入済みチェック
     if ($product->purchase) {
         return redirect()->back();
     }
 
-    Stripe::setApiKey(config('services.stripe.secret'));
-
-    // 支払い方法分岐
+    // コンビニ払い
     if ($request->payment == 1) {
-        $paymentMethods = ['konbini'];
-    } else {
-        $paymentMethods = ['card'];
+        Purchase::create([
+            'user_id'    => $user->id,
+            'product_id' => $product->id,
+            'postal_code'=> $profile->postal_code,
+            'address'    => $profile->address,
+            'building'   => $profile->building,
+            'payment'    => 1,
+        ]);
+
+        return redirect()->route('products.success', $product);
     }
 
-    $session = Session::create([
-        'payment_method_types' => $paymentMethods,
-        'line_items' => [[
-            'price_data' => [
-                'currency' => 'jpy',
-                'product_data' => [
-                    'name' => $product->product_name,
+    // カード払い
+    if ($request->payment == 2) {
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        $session = CheckoutSession::create([
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'product_data' => [
+                        'name' => $product->product_name,
+                    ],
+                    'unit_amount' => $product->price,
                 ],
-                'unit_amount' => $product->price,
-            ],
-            'quantity' => 1,
-        ]],
-        'mode' => 'payment',
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('products.success', $product),
+            'cancel_url' => route('purchase', $product),
+        ]);
 
-        'success_url' => route('products.success', $product)
-            . '?payment=' . $request->payment,
-
-        'cancel_url' => url()->previous(),
-    ]);
-
-    return redirect($session->url);
+        return redirect($session->url);
+    }
     }
 
     public function success(Request $request, Product $product)
@@ -186,7 +220,7 @@ class ProductController extends Controller
         'postal_code' => $profile->postal_code,
         'address'     => $profile->address,
         'building'    => $profile->building,
-        'payment'     => $request->payment, // 1 or 2
+        'payment'     => 2,
     ]);
 
     return redirect()->route('product.list');

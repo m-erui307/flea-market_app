@@ -43,7 +43,7 @@
 .content {
     display: flex;
     padding: 50px;
-    gap: 50px;
+    gap: 80px;
     max-width: 1400px;
     margin: 0 auto;
 }
