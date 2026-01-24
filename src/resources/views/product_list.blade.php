@@ -9,44 +9,48 @@
 </head>
 <body>
   <header class="header">
-    <img class="header-logo" src="../../../img/COACHTECHヘッダーロゴ.png">
-    <form class="search-form" action="{{ url()->current() }}" method="get">
-    @csrf
-    <div class="search-form__item">
-      <input class="search-form__item-input" type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？">
+    <div class="header-inner">
+      <img class="header-logo" src="../../../img/COACHTECHヘッダーロゴ.png">
+      <form class="search-form" action="{{ url()->current() }}" method="get">
+        @csrf
+        <div class="search-form__item">
+          <input class="search-form__item-input" type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？">
+        </div>
+      </form>
+      <nav class="header-nav">
+        <ul class="header-nav__list">
+          @if (Auth::check())
+          <li>
+            <form class="logout-form" action="{{ route('logout') }}" method="post">
+              @csrf
+              <button type="submit" class="header-nav__item">ログアウト</button>
+            </form>
+          </li>
+          @else
+          <li>
+            <a href="{{ route('login') }}" class="header-nav__item">ログイン</a>
+          </li>
+          @endif
+          <li>
+            <a class="header-nav__item" href="{{ Auth::check() ? route('profile.index') : route('login') }}">マイページ</a>
+          </li>
+          <li>
+            <a class="header-nav__item-l" href="{{ Auth::check() ? route('exhibition') : route('login') }}">出品</a>
+          </li>
+        </ul>
+      </nav>
     </div>
-    </form>
-    <nav class="header-nav">
-      <ul class="header-nav__list">
-        @if (Auth::check())
-        <form class="form" action="{{ route('logout') }}" method="post">
-          @csrf
-          <li><button type="submit" class="header-nav__item">ログアウト</button></li>
-        </form>
-        @else
-        <li>
-          <a href="{{ route('login') }}" class="header-nav__item">
-            ログイン
-          </a>
-        </li>
-        @endif
-        <li>
-          <a class="header-nav__item" href="{{ Auth::check() ? route('profile.index') : route('login') }}">マイページ</a>
-        </li>
-        <li>
-          <a class="header-nav__item-l" href="{{ Auth::check() ? route('exhibition') : route('login') }}">出品</a>
-        </li>
-      </ul>
-    </nav>
   </header>
   <main>
     <div class="product-list__nav">
-      <a href="{{ route('product.list', ['keyword' => request('keyword')]) }}" class="product-list__nav--recs {{ $type === 'recommend' ? 'active' : '' }}">
-        おすすめ
-      </a>
-      <a href="{{ route('products.recommend', ['keyword' => request('keyword')]) }}" class="product-list__nav--my-list {{ $type === 'mylist' ? 'active' : '' }}">
-        マイリスト
-      </a>
+      <div class="product-list__nav-inner">
+        <a href="{{ route('product.list', ['keyword' => request('keyword')]) }}" class="product-list__nav--recs {{ $type === 'recommend' ? 'active' : '' }}">
+          おすすめ
+        </a>
+        <a href="{{ route('products.recommend', ['keyword' => request('keyword')]) }}" class="product-list__nav--my-list {{ $type === 'mylist' ? 'active' : '' }}">
+          マイリスト
+        </a>
+      </div>
     </div>
     <div class="product-list">
       @if($type === 'recommend')

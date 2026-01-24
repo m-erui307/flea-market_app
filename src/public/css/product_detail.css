@@ -1,32 +1,43 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1540px;
     width: 100%;
-    min-height: 60px;
     background-color: black;
-    align-items: center;
 }
 
-.header-logo {
-    margin-left: 15px;
+.header-inner {
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 60px;
+    box-sizing: border-box;
+}
+
+.search-form {
+    width: 100%;
+    max-width: 250px;
+    min-width: 200px;
+    flex: 0 1 250px;
 }
 
 .search-form__item-input {
-    height: 35px;
-    margin-right: 100px;
     width: 100%;
+    max-width: 250px;
+    height: 35px;
 }
 
 .header-nav__list {
     display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .header-nav__item {
     color: white;
     background-color: black;
     text-decoration: none;
-    margin-right: 20px;
+    margin-right: 0;
     border: none;
     font-size: 16px;
 }
@@ -35,7 +46,7 @@
     color: black;
     background-color: white;
     text-decoration: none;
-    margin-right: 20px;
+    margin-right: 0;
     padding: 5px 15px;
     border-radius: 3%;
 }
@@ -43,18 +54,19 @@
 .product__content {
     display: flex;
     justify-content: center;
-    gap: 50px;
-    max-width: 1300px;
+    gap: 60px;
+    max-width: 1540px;
     margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .product-img {
-    width: 500px;
-    height: 500px;
+    flex: 0 0 450px;
+    height: 450px;
     background-color: #d8d8d8;
     border-radius: 1%;
     margin-top: 100px;
-    position: relative;
     overflow: hidden;
 }
 
@@ -65,9 +77,9 @@
 }
 
 .product-detail__content {
-    margin-left: 70px;
     margin-top: 100px;
-    width: 500px;
+    flex: 0 0 450px;
+    max-width: 450px;
 }
 
 .product-name {
@@ -138,7 +150,7 @@
 }
 
 .explanation-content {
-    width: 500px;
+    width: 100%;
     margin-top: 20px;
 }
 
@@ -150,6 +162,8 @@
 
 .product-info__table {
     margin-top: 20px;
+    width: 100%;
+    table-layout: fixed;
 }
 
 .product-info__label {
@@ -202,7 +216,7 @@
 
 .comment-content {
     background-color: #d8d8d8;
-    width: 500px;
+    word-break: break-word;
     border-radius: 3%;
     margin-top: 10px;
     font-size: 14px;
@@ -216,7 +230,7 @@
 }
 
 .comment-field__item {
-    width: 500px;
+    width: 100%;
     border: 1px solid;
     border-radius: 3px;
     background-color: white;
@@ -229,7 +243,7 @@
 }
 
 .post-btn {
-    width: 500px;
+    width: 100%;
     margin-top: 20px;
     margin-bottom: 60px;
     padding: 3px;

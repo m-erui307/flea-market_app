@@ -43,9 +43,17 @@
 .content {
     display: flex;
     padding: 50px;
-    gap: 80px;
+    gap: 100px;
     max-width: 1400px;
     margin: 0 auto;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.content>div:first-child {
+    display: flex;
+    flex-direction: column;
+    width: 700px;
 }
 
 .detail-content {

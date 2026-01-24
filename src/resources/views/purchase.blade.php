@@ -40,22 +40,24 @@
     </nav>
   </header>
   <main>
-    <div class="content">
-      <div class="detail-content">
-        <div class="product-detail">
-          <div class="product-img">
-            <img src="{{ $product->product_image }}" alt="商品画像">
-          </div>
-          <div class="product-info">
-            <div class="product-name">
-              {{ $product->product_name }}
+    <div class="content" style="display:flex; gap:30px; align-items:flex-start;">
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="detail-content">
+          <div class="product-detail">
+            <div class="product-img">
+              <img src="{{ $product->product_image }}" alt="商品画像">
             </div>
-            <div class="product-price">
-              ¥{{ number_format($product->price) }}
+            <div class="product-info">
+              <div class="product-name">
+                {{ $product->product_name }}
+              </div>
+              <div class="product-price">
+                ¥{{ number_format($product->price) }}
+              </div>
             </div>
           </div>
         </div>
-        <form action="{{ route('products.checkout', $product) }}" method="post">
+        <form id="purchaseForm" action="{{ route('products.checkout', $product) }}" method="post">
           @csrf
           <div class="payment-content">
             <div class="payment-method">
@@ -83,7 +85,7 @@
             </div>
             @if ($profile)
             <div class="postal-code">
-              〒{{ $profile->postal_code }}
+            〒{{ $profile->postal_code }}
               <input type="hidden" name="postal_code" value="{{ $profile->postal_code }}">
             </div>
             <div class="address">
@@ -107,28 +109,29 @@
           </div>
         </form>
       </div>
-      <div class="confirm-content">
-        <table class="confirm__table">
-          <tr class="confirm__row">
-            <th class="confirm__label">商品代金</th>
-            <td class="confirm__data">¥{{ number_format($product->price) }}</td>
-          </tr>
-          <tr class="confirm__row">
-            <th class="confirm__label">支払い方法</th>
-            <td id="paymentDisplay" class="confirm__data"></td>
-          </tr>
-        </table>
-        <script>
-          const paymentSelect = document.getElementById('paymentSelect');
-          const paymentDisplay = document.getElementById('paymentDisplay');
-
-          paymentSelect.addEventListener('change', function() {
-            const selectedText = paymentSelect.options[paymentSelect.selectedIndex].text;
-            paymentDisplay.textContent = selectedText;
-          });
-        </script>
-        <button class="purchase-btn">購入する</button>
+        <div class="confirm-content">
+          <table class="confirm__table">
+            <tr class="confirm__row">
+              <th class="confirm__label">商品代金</th>
+              <td class="confirm__data">¥{{ number_format($product->price) }}</td>
+            </tr>
+            <tr class="confirm__row">
+              <th class="confirm__label">支払い方法</th>
+              <td id="paymentDisplay" class="confirm__data"></td>
+            </tr>
+          </table>
+          <button type="button" class="purchase-btn" onclick="document.getElementById('purchaseForm').submit();">購入する</button>
+        </div>
       </div>
+      <script>
+        const paymentSelect = document.getElementById('paymentSelect');
+        const paymentDisplay = document.getElementById('paymentDisplay');
+
+        paymentSelect.addEventListener('change', function() {
+        const selectedText = paymentSelect.options[paymentSelect.selectedIndex].text;
+        paymentDisplay.textContent = selectedText;
+        });
+      </script>
     </div>
   </main>
 </body>
