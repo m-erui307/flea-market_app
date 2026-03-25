@@ -44,7 +44,16 @@
       <div class="profile-picture">
         <img src="{{ $profile && $profile->profile_image ? asset('storage/' . $profile->profile_image) : '' }}" alt="プロフィール画像">
       </div>
-      <p class="user-name">{{ $user->user_name }}</p>
+      <div class="user-name__content">
+        <p class="user-name">{{ $user->user_name }}</p>
+        <div class="star-content">
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+        </div>
+      </div>
       <a href="{{ route('profile.edit') }}" class="picture-select">
         プロフィールを編集
       </a>
@@ -57,13 +66,24 @@
       class="purchase {{ $tab === 'purchase' ? 'active' : '' }}">
         購入した商品
       </a>
+      <a href="{{ route('profile.index', ['tab' => 'transaction']) }}" class="transaction {{ $tab === 'transaction' ? 'active' : '' }}">
+        取引中の商品
+      </a>
+      @if(!empty($totalUnreadLabel))
+      <span class="message-badge">{{ $totalUnreadLabel }}</span>
+      @endif
     </div>
     <div class="product-list">
       @foreach($products as $product)
       <div class="product-list__content">
-        <a href="{{ route('products.show', $product->id) }}">
+        <a href="{{ $tab === 'transaction'
+      ? route('transaction.show', $product->id)
+      : route('products.show', $product->id) }}">
           <div class="product-list__img">
             <img src="{{ $product->product_image }}" alt="商品画像">
+            @if(!empty($product->unread_label))
+              <span class="product-badge">{{ $product->unread_label }}</span>
+            @endif
           </div>
         </a>
         <div class="product-name">

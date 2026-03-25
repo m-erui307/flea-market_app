@@ -64,5 +64,15 @@ class Product extends Model
     {
     return $this->hasOne(Purchase::class);
     }
+
+    public function messages()
+    {
+    return $this->hasMany(Message::class);
+    }
+
+    public function user()
+    {
+    return $this->belongsTo(User::class);
+    }
 }
 

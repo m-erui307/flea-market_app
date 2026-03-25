@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,3 +106,19 @@ Route::middleware('auth')->group(function () {
         return view('auth.email_verification');
     })->name('verification.notice');
 });
+
+Route::get('/transaction/{product}', [UserController::class, 'show'])
+    ->name('transaction.show')
+    ->middleware('auth');
+
+Route::post('/transaction/{product}/message', [MessageController::class, 'store'])
+    ->name('transaction.message.store')
+    ->middleware('auth');
+
+Route::patch('/transaction/message/{message}', [MessageController::class, 'update'])
+    ->name('transaction.message.update')
+    ->middleware('auth');
+
+Route::delete('/transaction/message/{message}', [MessageController::class, 'destroy'])
+    ->name('transaction.message.destroy')
+    ->middleware('auth');
