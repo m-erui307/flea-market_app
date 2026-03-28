@@ -191,3 +191,121 @@
 .product-name {
     margin-top: 5px;
 }
+
+
+
+@media screen and (max-width: 850px) and (min-width: 768px) {
+
+    .header {
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 5px 15px;
+        min-height: auto;
+    }
+
+    .header-logo {
+        margin: 5px 0;
+        width: 200px;
+    }
+
+    .search-form__item-input {
+        width: 100%;
+        margin-right: 0;
+        margin-top: 5px;
+        height: 30px;
+    }
+
+    .header-nav__list {
+        flex-wrap: wrap;
+        margin-top: 5px;
+    }
+
+    .header-nav__item,
+    .header-nav__item-l {
+        margin-right: 10px;
+        font-size: 14px;
+    }
+
+    .profile-picture__content {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        margin: 30px auto;
+        gap: 20px;
+    }
+
+    .profile-picture {
+        width: 100px;
+        height: 100px;
+    }
+
+    .user-name {
+        font-size: 18px;
+        margin-left: 0;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .star-content {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+
+    .picture-select {
+        margin-left: 0;
+        margin-top: 10px;
+        padding: 5px 8px;
+        font-size: 14px;
+    }
+
+    .list-nav {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 30px;
+        gap: 20px;
+    }
+
+    .exhibition,
+    .purchase,
+    .transaction {
+        margin-left: 0;
+        font-size: 14px;
+    }
+
+    /* ===== 商品リスト ===== */
+    .product-list {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .product-list__content {
+        width: 45%;
+        margin-top: 20px;
+    }
+
+    .product-list__img {
+        width: 50%;
+        height: auto;
+    }
+
+    .product-list__img img {
+        height: auto;
+    }
+
+    .product-name {
+        font-size: 14px;
+        margin-top: 5px;
+        text-align: center;
+    }
+
+    .message-badge {
+        font-size: 10px;
+        min-width: 18px;
+        height: 18px;
+        line-height: 18px;
+    }
+}

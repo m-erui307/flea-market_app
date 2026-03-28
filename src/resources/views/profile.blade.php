@@ -47,11 +47,13 @@
       <div class="user-name__content">
         <p class="user-name">{{ $user->user_name }}</p>
         <div class="star-content">
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
+          @if(!is_null($averageRating))
+            @for($i = 1; $i <= 5; $i++)
+            <span class="star" style="color: {{ $i <= $averageRating ? '#fff048' : '#d8d8d8' }};">
+              ★
+            </span>
+            @endfor
+          @endif
         </div>
       </div>
       <a href="{{ route('profile.edit') }}" class="picture-select">

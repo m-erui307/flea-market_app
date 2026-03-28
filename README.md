@@ -24,6 +24,30 @@ php artisan migrate
 7. シーディングの実行
 php artisan db:seed
 
+## ログイン情報
+ログインURL: http://localhost/login
+
+ユーザー名: user1
+メールアドレス: user1@example.com
+パスワード: password
+備考: ５つの出品済みの商品データを所持している
+
+ユーザー名: user2
+メールアドレス: user2@example.com
+パスワード: password
+備考: ５つの出品済みの商品データを所持している
+
+ユーザー名: user3
+メールアドレス: user3@example.com
+パスワード: password
+
+上記のユーザーでログインした場合、初めて商品を購入する際やマイページに遷移する際にメール認証とプロフィール設定または住所の登録が必要になります。
+メール認証は「認証メールを再送する」を押してから「認証はこちらから」を押し、mailhogのメール内の「Verify Email Address」を押すと認証が完了します。
+プロフィール設定・住所登録は項目を入力し、「更新する」を押して登録してください。（ユーザー名、郵便番号、住所は必須です）
+
+※ユーザーは会員登録画面からも登録可能です。
+会員登録URL: http://localhost/register
+
 ## 使用技術(実行環境)
 - PHP8.1.34
 - Laravel8.83.8

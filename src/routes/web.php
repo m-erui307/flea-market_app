@@ -11,6 +11,8 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -122,3 +124,9 @@ Route::patch('/transaction/message/{message}', [MessageController::class, 'updat
 Route::delete('/transaction/message/{message}', [MessageController::class, 'destroy'])
     ->name('transaction.message.destroy')
     ->middleware('auth');
+
+Route::post('/transaction/{product}/rating', [RatingController::class, 'store'])
+    ->name('transaction.rating.store');
+
+Route::post('/transaction/{product}/complete', [TransactionController::class, 'complete'])
+    ->name('transaction.complete');

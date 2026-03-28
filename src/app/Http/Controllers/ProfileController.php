@@ -8,6 +8,8 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Profile;
 use App\Http\Requests\ProfileRequest;
+use App\Models\Rating;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
@@ -93,7 +95,17 @@ class ProfileController extends Controller
                 $product->latestMessageAt = $latestMessage->created_at ?? null;
 
                 return $product;
-            });
+            })
+
+            ->filter(function ($product) {
+                $ratingCount = \App\Models\Rating::where('product_id', $product->id)
+                    ->distinct('rater_id')
+                    ->count('rater_id');
+
+                return $ratingCount < 2;
+            })
+            ->sortByDesc('latestMessageAt')
+            ->values();
 
             // --- 並び替え：最新メッセージ順（新着順） ---
             $products = $products->sortByDesc('latestMessageAt')->values();
@@ -124,12 +136,17 @@ class ProfileController extends Controller
 
         $totalUnreadLabel = $totalUnread === 0 ? null : ($totalUnread > 99 ? '99+' : $totalUnread);
 
+        $ratingData = Rating::where('ratee_id', $user->id)->avg('rating');
+        $averageRating = $ratingData ? round($ratingData) : null;
+
         return view('profile', compact(
             'user',
             'profile',
             'products',
             'tab',
-            'totalUnreadLabel'
+            'totalUnreadLabel',
+            'averageRating'
         ));
     }
+
 }

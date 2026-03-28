@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -29,6 +30,10 @@ class UserController extends Controller
         }
 
     $purchase = $product->purchase;
+
+    $alreadyRated = Rating::where('product_id', $product->id)
+    ->where('rater_id', auth()->id())
+    ->exists();
 
     $buyer = $purchase->user;
     $seller = $product->user;
@@ -83,7 +88,9 @@ class UserController extends Controller
             'myProfile',
             'isBuyer',
             'isSeller',
-            'otherProducts'
+            'otherProducts',
+            'purchase',
+            'alreadyRated'
         ));
     }
 }
